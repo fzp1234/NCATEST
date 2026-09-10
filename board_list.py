@@ -4787,7 +4787,7 @@ BOARD_CFG = {
                 "F12": "",
                 "F12X/Y": ""
             },
-            "DSA9": {
+            "DSA9(花面朝上)": {
                 "A2": "CBITA33",
                 "A2X/Y": "CBITA34",
                 "A3": "CBITA35",
@@ -4937,7 +4937,7 @@ BOARD_CFG = {
                 "F12": "",
                 "F12X/Y": ""
             },
-            "DSA10": {
+            "DSA10(花面朝上)": {
                 "A2": "CBITA65",
                 "A2X/Y": "CBITA66",
                 "A3": "CBITA67",
@@ -5087,7 +5087,7 @@ BOARD_CFG = {
                 "F12": "",
                 "F12X/Y": ""
             },
-            "DSA11": {
+            "DSA11(花面朝上)": {
                 "A2": "CBITA97",
                 "A2X/Y": "CBITA98",
                 "A3": "CBITA99",
@@ -5237,7 +5237,7 @@ BOARD_CFG = {
                 "F12": "",
                 "F12X/Y": ""
             },
-            "DSA12": {
+            "DSA12(花面朝上)": {
                 "A2": "CBITA129",
                 "A2X/Y": "CBITA130",
                 "A3": "CBITA131",
@@ -5387,7 +5387,7 @@ BOARD_CFG = {
                 "F12": "",
                 "F12X/Y": ""
             },
-            "DSA13": {
+            "DSA13(花面朝上)": {
                 "A2": "CBITA162",
                 "A2X/Y": "CBITA163",
                 "A3": "CBITA164",
@@ -5537,7 +5537,7 @@ BOARD_CFG = {
                 "F12": "",
                 "F12X/Y": ""
             },
-            "DSA14": {
+            "DSA14(花面朝上)": {
                 "A2": "CBITA194",
                 "A2X/Y": "CBITA195",
                 "A3": "CBITA196",
@@ -5687,7 +5687,7 @@ BOARD_CFG = {
                 "F12": "",
                 "F12X/Y": ""
             },
-            "DSA15": {
+            "DSA15(花面朝上)": {
                 "A2": "CBITA226",
                 "A2X/Y": "CBITA227",
                 "A3": "CBITA228",
