@@ -24,7 +24,7 @@ from img_code_map import map_cable, map_board, map_conn, map_if, map_mode
 class PinConvertApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("线缆引脚定义生成工具v1.2")
+        self.root.title("线缆引脚定义生成工具v1.3")
         self.root.geometry("1000x385")  # 加宽窗口，容纳【线缆长度】+【物料编码】
 
         # ====滚动信息内容====
@@ -135,7 +135,7 @@ class PinConvertApp:
         self.scroll_label.pack(side="left", fill="x", expand=True)
 
         # 右侧：版本号
-        tk.Label(status_bar, text="版本：v1.2", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
+        tk.Label(status_bar, text="版本：v1.3", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
 
         # 启动滚动
         self.update_scroll()
