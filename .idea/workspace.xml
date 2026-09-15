@@ -3,14 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="4bfae40f-9c13-4d50-85be-b48eab6a80ea" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board_list.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/board_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/board_list.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.1/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.1/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.1/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.1/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.1/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.1/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.1/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.1/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.1/Remaping_V1.1.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.1/Remaping_V1.1.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.1/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.1/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/Remaping_V1.1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Remaping_V1.1.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cable_list.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cable_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/cable_list.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flip_list.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img_code_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/img_code_map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main2.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +39,28 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main (1)">
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="RemapEditor" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="RemapEditor" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -52,6 +74,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="C:\workfile\RemapEditor\main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="RemapEditor" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -146,10 +189,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main (1)" />
+        <item itemvalue="Python.main2" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.new" />
-        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -175,38 +219,38 @@
       <screen x="0" y="0" width="1880" height="944" />
     </state>
     <state x="918" y="155" key="#xdebugger.evaluate/0.0.1880.944@0.0.1880.944" timestamp="1788851205693" />
-    <state width="1858" height="175" key="GridCell.Tab.0.bottom" timestamp="1789022500072">
+    <state width="1858" height="175" key="GridCell.Tab.0.bottom" timestamp="1789453746733">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
-    <state width="1858" height="175" key="GridCell.Tab.0.bottom/0.0.1880.944@0.0.1880.944" timestamp="1789022500072" />
-    <state width="1858" height="175" key="GridCell.Tab.0.center" timestamp="1789022500072">
+    <state width="1858" height="175" key="GridCell.Tab.0.bottom/0.0.1880.944@0.0.1880.944" timestamp="1789453746733" />
+    <state width="1858" height="175" key="GridCell.Tab.0.center" timestamp="1789453746733">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
-    <state width="1858" height="175" key="GridCell.Tab.0.center/0.0.1880.944@0.0.1880.944" timestamp="1789022500072" />
-    <state width="1858" height="175" key="GridCell.Tab.0.left" timestamp="1789022500072">
+    <state width="1858" height="175" key="GridCell.Tab.0.center/0.0.1880.944@0.0.1880.944" timestamp="1789453746733" />
+    <state width="1858" height="175" key="GridCell.Tab.0.left" timestamp="1789453746733">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
-    <state width="1858" height="175" key="GridCell.Tab.0.left/0.0.1880.944@0.0.1880.944" timestamp="1789022500072" />
-    <state width="1858" height="175" key="GridCell.Tab.0.right" timestamp="1789022500072">
+    <state width="1858" height="175" key="GridCell.Tab.0.left/0.0.1880.944@0.0.1880.944" timestamp="1789453746733" />
+    <state width="1858" height="175" key="GridCell.Tab.0.right" timestamp="1789453746733">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
-    <state width="1858" height="175" key="GridCell.Tab.0.right/0.0.1880.944@0.0.1880.944" timestamp="1789022500072" />
-    <state width="1858" height="175" key="GridCell.Tab.1.bottom" timestamp="1789022500073">
+    <state width="1858" height="175" key="GridCell.Tab.0.right/0.0.1880.944@0.0.1880.944" timestamp="1789453746733" />
+    <state width="1858" height="175" key="GridCell.Tab.1.bottom" timestamp="1789453746627">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
-    <state width="1858" height="175" key="GridCell.Tab.1.bottom/0.0.1880.944@0.0.1880.944" timestamp="1789022500073" />
-    <state width="1858" height="175" key="GridCell.Tab.1.center" timestamp="1789022500073">
+    <state width="1858" height="175" key="GridCell.Tab.1.bottom/0.0.1880.944@0.0.1880.944" timestamp="1789453746627" />
+    <state width="1858" height="175" key="GridCell.Tab.1.center" timestamp="1789453746626">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
-    <state width="1858" height="175" key="GridCell.Tab.1.center/0.0.1880.944@0.0.1880.944" timestamp="1789022500073" />
-    <state width="1858" height="175" key="GridCell.Tab.1.left" timestamp="1789022500073">
+    <state width="1858" height="175" key="GridCell.Tab.1.center/0.0.1880.944@0.0.1880.944" timestamp="1789453746626" />
+    <state width="1858" height="175" key="GridCell.Tab.1.left" timestamp="1789453746626">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
-    <state width="1858" height="175" key="GridCell.Tab.1.left/0.0.1880.944@0.0.1880.944" timestamp="1789022500073" />
-    <state width="1858" height="175" key="GridCell.Tab.1.right" timestamp="1789022500073">
+    <state width="1858" height="175" key="GridCell.Tab.1.left/0.0.1880.944@0.0.1880.944" timestamp="1789453746626" />
+    <state width="1858" height="175" key="GridCell.Tab.1.right" timestamp="1789453746626">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
-    <state width="1858" height="175" key="GridCell.Tab.1.right/0.0.1880.944@0.0.1880.944" timestamp="1789022500073" />
+    <state width="1858" height="175" key="GridCell.Tab.1.right/0.0.1880.944@0.0.1880.944" timestamp="1789453746626" />
     <state x="441" y="103" key="SettingsEditor" timestamp="1788931296977">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
@@ -215,10 +259,10 @@
       <screen x="0" y="0" width="1880" height="944" />
     </state>
     <state width="700" height="452" key="XDebugger.FullValuePopup/0.0.1880.944@0.0.1880.944" timestamp="1788515252039" />
-    <state x="625" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1788936427291">
+    <state x="625" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1789436246696">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
-    <state x="625" y="294" key="com.intellij.ide.util.TipDialog/0.0.1880.944@0.0.1880.944" timestamp="1788936427291" />
+    <state x="625" y="294" key="com.intellij.ide.util.TipDialog/0.0.1880.944@0.0.1880.944" timestamp="1789436246696" />
     <state x="504" y="207" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1788850617250">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
