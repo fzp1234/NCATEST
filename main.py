@@ -29,7 +29,7 @@ from channel_map_list import CHANNEL_MAP_LIST
 class PinConvertApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("线缆引脚定义生成工具v1.6")
+        self.root.title("线缆引脚定义生成工具v1.7")
         self.root.geometry("1080x520")
 
         # ========== 新增：顶部标签页容器 ==========
@@ -164,7 +164,7 @@ class PinConvertApp:
         tk.Label(status_bar, text="作者：冯志鹏", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="left", padx=10)
         self.scroll_label = tk.Label(status_bar, text="", bg="#f0f0f0", font=("微软雅黑", 9), fg="#333333")
         self.scroll_label.pack(side="left", fill="x", expand=True)
-        tk.Label(status_bar, text="版本：v1.6", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
+        tk.Label(status_bar, text="版本：v1.7", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
 
         self.update_scroll()
         self.on_cable_changed()
@@ -752,7 +752,24 @@ class PinConvertApp:
 
             conn_name = s["connector"]
             gui_mode = s["mode"]
-            # ===== 你原来后面剩下的生成逻辑继续在这里补全 =====
+            # =========修复翻转判断逻辑=========
+            if conn_name and gui_mode == "花面朝下":
+                flip_dict = self.flip_list.get("CONNECTOR_C", {})
+                lookup_pin = flip_dict.get(lookup_pin, lookup_pin)
+
+            net_name = self.board_dict.get(s["board"], {}).get(conn_name, {}).get(lookup_pin, "")
+            row = [s["board"], conn_name, net_name, if_name, src_pin, s["mode"], dest_pin, cable_name, cable_length,
+                   cable_code]
+            rows.append(row)
+
+        try:
+            with open(out_path, "w", newline="", encoding="utf-8-sig") as f:
+                writer = csv.writer(f)
+                writer.writerow(headers)
+                writer.writerows(rows)
+            messagebox.showinfo("成功", "CSV文件生成完成")
+        except Exception as e:
+            messagebox.showerror("保存失败", str(e))
 
     def update_scroll(self):
         self.scroll_label.config(text=self.scroll_text[self.scroll_pos:] + self.scroll_text[:self.scroll_pos])

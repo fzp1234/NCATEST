@@ -2,228 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4bfae40f-9c13-4d50-85be-b48eab6a80ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Remaping_V1.6.spec" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/Remaping_V1.6/Analysis-00.toc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/Remaping_V1.6/EXE-00.toc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/Remaping_V1.6/PKG-00.toc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/Remaping_V1.6/PYZ-00.pyz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/Remaping_V1.6/PYZ-00.toc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/Remaping_V1.6/Remaping_V1.6.pkg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/Remaping_V1.6/base_library.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/Remaping_V1.6/warn-Remaping_V1.6.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/Remaping_V1.6/xref-Remaping_V1.6.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/channel_map/数字板D800_软硬件通道映射.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/channel_map_list.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/Remaping_V1.6.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile-2.0.0.dist-info/AUTHORS.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile-2.0.0.dist-info/INSTALLER" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile-2.0.0.dist-info/LICENCE.python" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile-2.0.0.dist-info/LICENCE.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile-2.0.0.dist-info/METADATA" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile-2.0.0.dist-info/RECORD" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile-2.0.0.dist-info/WHEEL" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile-2.0.0.dist-info/top_level.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile/incremental_tree.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/et_xmlfile/xmlfile.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl-3.1.5.dist-info/INSTALLER" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl-3.1.5.dist-info/LICENCE.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl-3.1.5.dist-info/METADATA" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl-3.1.5.dist-info/RECORD" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl-3.1.5.dist-info/WHEEL" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl-3.1.5.dist-info/top_level.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/_constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/cell/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/cell/_writer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/cell/cell.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/cell/read_only.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/cell/rich_text.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/cell/text.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/_3d.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/area_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/axis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/bar_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/bubble_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/chartspace.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/data_source.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/descriptors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/error_bar.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/label.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/layout.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/legend.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/line_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/marker.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/picture.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/pie_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/pivot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/plotarea.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/print_settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/radar_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/reader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/reference.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/scatter_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/series.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/series_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/shapes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/stock_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/surface_chart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/text.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/title.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/trendline.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chart/updown_bars.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chartsheet/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chartsheet/chartsheet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chartsheet/custom.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chartsheet/properties.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chartsheet/protection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chartsheet/publish.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chartsheet/relation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/chartsheet/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/comments/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/comments/author.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/comments/comment_sheet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/comments/comments.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/comments/shape_writer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/compat/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/compat/abc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/compat/numbers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/compat/product.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/compat/singleton.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/compat/strings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/descriptors/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/descriptors/base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/descriptors/container.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/descriptors/excel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/descriptors/namespace.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/descriptors/nested.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/descriptors/sequence.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/descriptors/serialisable.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/descriptors/slots.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/colors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/connector.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/drawing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/effect.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/fill.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/geometry.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/graphic.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/image.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/line.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/picture.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/properties.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/relation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/spreadsheet_drawing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/text.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/drawing/xdr.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/formatting/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/formatting/formatting.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/formatting/rule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/formula/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/formula/tokenizer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/formula/translate.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/packaging/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/packaging/core.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/packaging/custom.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/packaging/extended.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/packaging/interface.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/packaging/manifest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/packaging/relationship.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/packaging/workbook.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/pivot/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/pivot/cache.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/pivot/fields.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/pivot/record.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/pivot/table.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/reader/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/reader/drawings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/reader/excel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/reader/strings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/reader/workbook.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/alignment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/borders.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/builtins.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/cell_style.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/colors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/differential.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/fills.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/fonts.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/named_styles.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/numbers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/protection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/proxy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/styleable.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/stylesheet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/styles/table.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/bound_dictionary.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/cell.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/dataframe.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/datetime.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/escape.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/exceptions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/formulas.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/indexed_list.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/inference.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/protection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/utils/units.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/_writer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/child.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/defined_name.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/external_link/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/external_link/external.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/external_reference.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/function_group.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/properties.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/protection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/smart_tags.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/web.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/workbook/workbook.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/_read_only.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/_reader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/_write_only.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/_writer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/cell_range.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/cell_watch.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/controls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/copier.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/custom.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/datavalidation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/dimensions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/drawing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/errors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/filters.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/formula.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/header_footer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/hyperlink.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/merge.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/ole.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/pagebreak.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/picture.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/print_settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/properties.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/protection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/related.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/scenario.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/smart_tag.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/table.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/worksheet/worksheet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/writer/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/writer/excel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/writer/theme.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/xml/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/xml/constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/xml/functions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/board_list.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -432,51 +213,59 @@
       <screen x="0" y="0" width="1880" height="944" />
     </state>
     <state x="918" y="155" key="#xdebugger.evaluate/0.0.1880.944@0.0.1880.944" timestamp="1788851205693" />
-    <state width="1894" height="208" key="GridCell.Tab.0.bottom" timestamp="1790053712608">
-      <screen x="0" y="0" width="1916" height="958" />
+    <state width="1848" height="205" key="GridCell.Tab.0.bottom" timestamp="1790233688889">
+      <screen x="0" y="0" width="1870" height="948" />
     </state>
+    <state width="1848" height="205" key="GridCell.Tab.0.bottom/0.0.1870.948@0.0.1870.948" timestamp="1790233688889" />
     <state width="1858" height="323" key="GridCell.Tab.0.bottom/0.0.1880.944@0.0.1880.944" timestamp="1789536904931" />
     <state width="929" height="209" key="GridCell.Tab.0.bottom/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.0.bottom/0.0.1916.958@0.0.1916.958" timestamp="1790053712608" />
-    <state width="1894" height="208" key="GridCell.Tab.0.center" timestamp="1790053712608">
-      <screen x="0" y="0" width="1916" height="958" />
+    <state width="1848" height="205" key="GridCell.Tab.0.center" timestamp="1790233688889">
+      <screen x="0" y="0" width="1870" height="948" />
     </state>
+    <state width="1848" height="205" key="GridCell.Tab.0.center/0.0.1870.948@0.0.1870.948" timestamp="1790233688889" />
     <state width="1858" height="323" key="GridCell.Tab.0.center/0.0.1880.944@0.0.1880.944" timestamp="1789536904931" />
     <state width="929" height="209" key="GridCell.Tab.0.center/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.0.center/0.0.1916.958@0.0.1916.958" timestamp="1790053712608" />
-    <state width="1894" height="208" key="GridCell.Tab.0.left" timestamp="1790053712608">
-      <screen x="0" y="0" width="1916" height="958" />
+    <state width="1848" height="205" key="GridCell.Tab.0.left" timestamp="1790233688889">
+      <screen x="0" y="0" width="1870" height="948" />
     </state>
+    <state width="1848" height="205" key="GridCell.Tab.0.left/0.0.1870.948@0.0.1870.948" timestamp="1790233688889" />
     <state width="1858" height="323" key="GridCell.Tab.0.left/0.0.1880.944@0.0.1880.944" timestamp="1789536904931" />
     <state width="929" height="209" key="GridCell.Tab.0.left/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.0.left/0.0.1916.958@0.0.1916.958" timestamp="1790053712608" />
-    <state width="1894" height="208" key="GridCell.Tab.0.right" timestamp="1790053712608">
-      <screen x="0" y="0" width="1916" height="958" />
+    <state width="1848" height="205" key="GridCell.Tab.0.right" timestamp="1790233688889">
+      <screen x="0" y="0" width="1870" height="948" />
     </state>
+    <state width="1848" height="205" key="GridCell.Tab.0.right/0.0.1870.948@0.0.1870.948" timestamp="1790233688889" />
     <state width="1858" height="323" key="GridCell.Tab.0.right/0.0.1880.944@0.0.1880.944" timestamp="1789536904931" />
     <state width="929" height="209" key="GridCell.Tab.0.right/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.0.right/0.0.1916.958@0.0.1916.958" timestamp="1790053712608" />
-    <state width="1894" height="208" key="GridCell.Tab.1.bottom" timestamp="1790053712338">
-      <screen x="0" y="0" width="1916" height="958" />
+    <state width="1848" height="205" key="GridCell.Tab.1.bottom" timestamp="1790233688889">
+      <screen x="0" y="0" width="1870" height="948" />
     </state>
+    <state width="1848" height="205" key="GridCell.Tab.1.bottom/0.0.1870.948@0.0.1870.948" timestamp="1790233688889" />
     <state width="1858" height="323" key="GridCell.Tab.1.bottom/0.0.1880.944@0.0.1880.944" timestamp="1789536924322" />
     <state width="929" height="209" key="GridCell.Tab.1.bottom/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.1.bottom/0.0.1916.958@0.0.1916.958" timestamp="1790053712338" />
-    <state width="1894" height="208" key="GridCell.Tab.1.center" timestamp="1790053712338">
-      <screen x="0" y="0" width="1916" height="958" />
+    <state width="1848" height="205" key="GridCell.Tab.1.center" timestamp="1790233688889">
+      <screen x="0" y="0" width="1870" height="948" />
     </state>
+    <state width="1848" height="205" key="GridCell.Tab.1.center/0.0.1870.948@0.0.1870.948" timestamp="1790233688889" />
     <state width="1858" height="323" key="GridCell.Tab.1.center/0.0.1880.944@0.0.1880.944" timestamp="1789536924322" />
     <state width="929" height="209" key="GridCell.Tab.1.center/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.1.center/0.0.1916.958@0.0.1916.958" timestamp="1790053712338" />
-    <state width="1894" height="208" key="GridCell.Tab.1.left" timestamp="1790053712338">
-      <screen x="0" y="0" width="1916" height="958" />
+    <state width="1848" height="205" key="GridCell.Tab.1.left" timestamp="1790233688889">
+      <screen x="0" y="0" width="1870" height="948" />
     </state>
+    <state width="1848" height="205" key="GridCell.Tab.1.left/0.0.1870.948@0.0.1870.948" timestamp="1790233688889" />
     <state width="1858" height="323" key="GridCell.Tab.1.left/0.0.1880.944@0.0.1880.944" timestamp="1789536924322" />
     <state width="929" height="209" key="GridCell.Tab.1.left/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.1.left/0.0.1916.958@0.0.1916.958" timestamp="1790053712338" />
-    <state width="1894" height="208" key="GridCell.Tab.1.right" timestamp="1790053712338">
-      <screen x="0" y="0" width="1916" height="958" />
+    <state width="1848" height="205" key="GridCell.Tab.1.right" timestamp="1790233688889">
+      <screen x="0" y="0" width="1870" height="948" />
     </state>
+    <state width="1848" height="205" key="GridCell.Tab.1.right/0.0.1870.948@0.0.1870.948" timestamp="1790233688889" />
     <state width="1858" height="323" key="GridCell.Tab.1.right/0.0.1880.944@0.0.1880.944" timestamp="1789536924322" />
     <state width="929" height="209" key="GridCell.Tab.1.right/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.1.right/0.0.1916.958@0.0.1916.958" timestamp="1790053712338" />
@@ -488,11 +277,12 @@
       <screen x="0" y="0" width="1880" height="944" />
     </state>
     <state width="700" height="452" key="XDebugger.FullValuePopup/0.0.1880.944@0.0.1880.944" timestamp="1788515252039" />
-    <state x="637" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1790066113838">
-      <screen x="0" y="0" width="1916" height="958" />
+    <state x="638" y="324" key="com.intellij.ide.util.TipDialog" timestamp="1790130028724">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="625" y="294" key="com.intellij.ide.util.TipDialog/0.0.1880.944@0.0.1880.944" timestamp="1789536140162" />
-    <state x="637" y="298" key="com.intellij.ide.util.TipDialog/0.0.1916.958@0.0.1916.958" timestamp="1790066113838" />
+    <state x="637" y="298" key="com.intellij.ide.util.TipDialog/0.0.1916.958@0.0.1916.958" timestamp="1790127374488" />
+    <state x="638" y="324" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1790130028724" />
     <state x="504" y="207" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1788850617250">
       <screen x="0" y="0" width="1880" height="944" />
     </state>
