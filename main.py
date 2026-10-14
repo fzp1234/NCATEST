@@ -3,6 +3,7 @@ from tkinter import ttk, filedialog, messagebox
 import os
 import csv
 import sys
+import threading
 from openpyxl import load_workbook
 
 def resource_path(relative_path):
@@ -20,16 +21,18 @@ from cable_list import CABLE_DATA
 from board_list import BOARD_CFG
 from flip_list import FLIP_LIST
 from img_code_map import map_cable, map_board, map_conn, map_if, map_mode
+
 # ==========【新增导入装配场景配置】==========
 from scene_list import SCENE_LIST
-# ==========【新增：软硬件通道映射配置】==========
-from channel_map_list import CHANNEL_MAP_LIST
+
+# ==========【新增：机台-槽位-Excel映射配置】==========
+from machine_slot_map import MACHINE_CONFIG
 
 
 class PinConvertApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("线缆引脚定义生成工具v1.7")
+        self.root.title("线缆引脚定义生成工具v1.8")
         self.root.geometry("1080x520")
 
         # ========== 新增：顶部标签页容器 ==========
@@ -164,7 +167,7 @@ class PinConvertApp:
         tk.Label(status_bar, text="作者：冯志鹏", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="left", padx=10)
         self.scroll_label = tk.Label(status_bar, text="", bg="#f0f0f0", font=("微软雅黑", 9), fg="#333333")
         self.scroll_label.pack(side="left", fill="x", expand=True)
-        tk.Label(status_bar, text="版本：v1.7", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
+        tk.Label(status_bar, text="版本：v1.8", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
 
         self.update_scroll()
         self.on_cable_changed()
@@ -222,13 +225,24 @@ class PinConvertApp:
         tab3_main = tk.Frame(self.tab3)
         tab3_main.pack(fill="both", expand=True, padx=30, pady=20)
 
-        # 第1行：板卡型号下拉
-        row_ch_board = tk.Frame(tab3_main)
-        row_ch_board.pack(anchor="w", pady=(0, 8))
-        tk.Label(row_ch_board, text="板卡型号：", font=("微软雅黑", 11)).pack(side="left")
-        self.ch_board_combo = ttk.Combobox(row_ch_board, state="readonly", width=25)
-        self.ch_board_combo.pack(side="left", padx=10)
-        self.ch_board_combo.bind("<<ComboboxSelected>>", self.on_ch_board_selected)
+        # ========== 第1行：机台型号 + 槽位号 + 板卡名称（自动联动） ==========
+        row_ch_top = tk.Frame(tab3_main)
+        row_ch_top.pack(anchor="w", pady=(0, 8))
+
+        tk.Label(row_ch_top, text="机台型号：", font=("微软雅黑", 11)).pack(side="left")
+        self.machine_combo = ttk.Combobox(row_ch_top, state="readonly", width=18)
+        self.machine_combo.pack(side="left", padx=(10, 20))
+        self.machine_combo.bind("<<ComboboxSelected>>", self.on_machine_selected)
+
+        tk.Label(row_ch_top, text="槽位号：", font=("微软雅黑", 11)).pack(side="left")
+        self.slot_combo = ttk.Combobox(row_ch_top, state="readonly", width=15)
+        self.slot_combo.pack(side="left", padx=(10, 20))
+        self.slot_combo.bind("<<ComboboxSelected>>", self.on_slot_selected)
+
+        tk.Label(row_ch_top, text="板卡名称：", font=("微软雅黑", 11)).pack(side="left")
+        self.ch_board_var = tk.StringVar()
+        tk.Label(row_ch_top, textvariable=self.ch_board_var, width=20,
+                 bg="white", relief="solid", anchor="w", font=("微软雅黑", 11)).pack(side="left", padx=10)
 
         # 第2块：动态表单区域（列名+取值，动态生成）
         self.ch_form_frame = tk.LabelFrame(tab3_main, text="通道映射信息（对应Excel表格）", padx=12, pady=8)
@@ -237,50 +251,168 @@ class PinConvertApp:
         # 第3行：打开完整Excel映射文件按钮
         row_btn = tk.Frame(tab3_main)
         row_btn.pack(anchor="w", pady=(0, 0))
-        self.open_ch_excel_btn = ttk.Button(row_btn, text="打开完整通道映射文件(Excel)", command=self.open_channel_map_file)
+        self.open_ch_excel_btn = ttk.Button(row_btn, text="打开机台通道映射Excel", command=self.open_channel_map_file)
         self.open_ch_excel_btn.pack()
 
         # tab3 运行时状态
-        self.ch_excel_rows = []        # Excel数据行（dict，key为列名）
-        self.ch_column_names = []      # 配置的列名（显示顺序）
-        self.ch_key_column = ""        # 关键列（下拉框列）
-        self.ch_form_rows = {}         # 列名 -> 控件（下拉框/变量）
-        self.ch_key_combo = None       # 关键列下拉框控件
-
-        # 初始化板卡下拉
-        self.channel_cfg = CHANNEL_MAP_LIST
-        ch_board_names = list(self.channel_cfg.keys())
-        self.ch_board_combo["values"] = ch_board_names
-        if ch_board_names:
-            self.ch_board_combo.current(0)
-            self.on_ch_board_selected()
-
-    # ============================================================
-    # 标签页3：软硬件通道映射（动态读取Excel版）
-    # ============================================================
-    def _clear_ch_form(self):
-        """清空通道映射表单，重置运行时状态。"""
-        for w in self.ch_form_frame.winfo_children():
-            w.destroy()
         self.ch_excel_rows = []
         self.ch_column_names = []
         self.ch_key_column = ""
         self.ch_form_rows = {}
         self.ch_key_combo = None
+        self.current_excel_path = ""   # 当前机台的Excel路径
+        self._excel_cache = {}        # {excel路径: {sheet名: 行数据list}}，避免重复读文件
+        self._ch_req_id = 0           # 请求ID，快速切槽位时丢弃旧线程的结果
+
+        # ==== 初始化配置 ====
+        self.machine_cfg = MACHINE_CONFIG
+        machine_names = list(self.machine_cfg.keys())
+        self.machine_combo["values"] = machine_names
+        if machine_names:
+            self.machine_combo.current(0)
+            self.on_machine_selected()
+
+    # ============================================================
+    # 机台 / 槽位 联动回调
+    # ============================================================
+    def on_machine_selected(self, event=None):
+        """机台型号切换：刷新槽位号下拉列表。"""
+        machine_name = self.machine_combo.get()
+        machine_info = self.machine_cfg.get(machine_name, {})
+        slot_dict = machine_info.get("slots", {})
+        slot_list = list(slot_dict.keys())
+        self.slot_combo["values"] = slot_list
+        if slot_list:
+            self.slot_combo.current(0)
+        else:
+            self.slot_combo.set("")
+        self.on_slot_selected()
+
+    def on_slot_selected(self, event=None):
+        """槽位号切换：读取该槽位对应的sheet，刷新通道映射表单。"""
+        self._reset_ch_state()
+        machine_name = self.machine_combo.get()
+        slot_name = self.slot_combo.get()
+        machine_info = self.machine_cfg.get(machine_name, {})
+        slot_dict = machine_info.get("slots", {})
+
+        # 显示板卡名称（value 直接就是板卡名）
+        board_name = slot_dict.get(slot_name, "")
+        self.ch_board_var.set(board_name)
+
+        raw_excel = machine_info.get("excel_file", "").strip()
+        sheet_name = slot_name.strip()   # slot key 本身就是 sheet 名
+
+        # 根据板卡名取对应的列结构；找不到则回退到机台级配置（兼容旧格式）
+        board_columns = machine_info.get("board_columns", {})
+        col_cfg = board_columns.get(board_name, {})
+        columns = col_cfg.get("columns", []) or machine_info.get("columns", [])
+        key_column = col_cfg.get("key_column", "").strip() or machine_info.get("key_column", "").strip()
+
+        if not raw_excel:
+            self._show_form_status(f"机台[{machine_name}]未配置 excel_file（Excel文件路径）")
+            return
+        if not columns:
+            self._show_form_status(f"板卡[{board_name}]未配置 columns（请检查 board_columns）")
+            return
+
+        self.current_excel_path = resource_path(raw_excel)
+        self.ch_column_names = [c for c in columns if str(c).strip()]
+        self.ch_key_column = key_column
+
+        if not self.ch_column_names:
+            self._show_form_status(f"板卡[{board_name}]的columns配置为空或全是空格，请检查 board_columns")
+            return
+
+        if not os.path.exists(self.current_excel_path):
+            is_unc = self.current_excel_path.startswith(r"\\")
+            tip = "\n请确认已连接共享盘、有访问权限" if is_unc else ""
+            self._show_form_status(f"找不到通道映射Excel：\n{self.current_excel_path}{tip}")
+            return
+
+        # 每次切槽位生成新请求ID，旧线程结果直接丢弃
+        self._ch_req_id += 1
+        req_id = self._ch_req_id
+
+        # 缓存命中直接用，不走后台线程（空结果不缓存，避免坏数据）
+        cache = self._excel_cache.get(self.current_excel_path, {})
+        if sheet_name in cache:
+            self.ch_excel_rows = cache[sheet_name]
+            self._build_ch_form()
+            return
+
+        # 未命中：后台线程读Excel，避免阻塞UI
+        self._show_form_status("正在读取Excel，请稍候...")
+
+        def _worker():
+            try:
+                rows = self._read_excel_rows(self.current_excel_path, sheet_name)
+                # 非空才写缓存
+                if rows:
+                    c = self._excel_cache.get(self.current_excel_path, {})
+                    c[sheet_name] = rows
+                    self._excel_cache[self.current_excel_path] = c
+                # 切回主线程更新UI，附带请求ID校验
+                self.root.after(0, lambda: self._on_excel_loaded(rows, sheet_name, req_id))
+            except Exception as e:
+                err = str(e)
+                self.root.after(0, lambda: self._show_form_status(f"读取Excel失败：\n{err}"))
+
+        threading.Thread(target=_worker, daemon=True).start()
+
+    def _on_excel_loaded(self, rows, sheet_name, req_id=None):
+        """后台线程读完Excel后，主线程回调：填充数据并生成表单。"""
+        # 旧请求的结果直接丢弃（用户已经切到别的槽位了）
+        if req_id is not None and req_id != self._ch_req_id:
+            return
+        self.ch_excel_rows = rows
+        if not rows:
+            self._show_form_status(
+                f"sheet[{sheet_name}]中未找到可显示的数据行。\n"
+                f"请检查：\n"
+                f"1. 该sheet是否有数据\n"
+                f"2. 配置的列名[{self.ch_column_names}]是否和Excel表头完全一致（注意空格/错别字）"
+            )
+            return
+        self._build_ch_form()
+
+    # ============================================================
+    # 标签页3：软硬件通道映射（动态读取Excel版）
+    # ============================================================
+    def _clear_ch_form(self):
+        """清空通道映射表单控件（保留列名等状态变量，由调用方负责重置）。"""
+        for w in self.ch_form_frame.winfo_children():
+            w.destroy()
+        self.ch_form_rows = {}
+        self.ch_key_combo = None
+
+    def _reset_ch_state(self):
+        """重置所有通道映射运行时状态。"""
+        self._clear_ch_form()
+        self.ch_excel_rows = []
+        self.ch_column_names = []
+        self.ch_key_column = ""
 
     def _show_form_status(self, msg):
-        """在表单区域显示提示信息（错误/无配置等）。"""
+        """在表单区域显示提示信息（只清控件，不动状态变量）。"""
         self._clear_ch_form()
         tk.Label(self.ch_form_frame, text=msg, fg="#a00",
                  font=("微软雅黑", 10), justify="left").grid(row=0, column=0, padx=6, pady=10, sticky="w")
 
-    def _read_excel_rows(self, full_path):
+    def _read_excel_rows(self, full_path, sheet_name=None):
         """
         读取通道映射Excel（openpyxl，无pandas依赖），按 self.ch_column_names 配置的列提取数据。
+        指定 sheet_name 时读取该sheet，否则读取active sheet。
         自动定位包含全部配置列名的表头行，返回数据行列表（每行为 dict）。
         """
         wb = load_workbook(filename=full_path, data_only=True)
-        ws = wb.active
+        if sheet_name:
+            if sheet_name not in wb.sheetnames:
+                wb.close()
+                raise Exception(f"Excel中找不到sheet：{sheet_name}\n现有sheet：{wb.sheetnames}")
+            ws = wb[sheet_name]
+        else:
+            ws = wb.active
         # 一次性读取所有行（普通模式，小文件无压力）
         all_rows = list(ws.iter_rows(values_only=True))
         wb.close()
@@ -303,13 +435,15 @@ class PinConvertApp:
                 break
 
         if header is None:
-            # 没找到同时包含所有列名的行，列出Excel中实际读到的表头供排查
-            sample_header = [str(v).strip() for v in all_rows[0] if v is not None] if all_rows else []
+            # 没找到同时包含所有列名的行，列出前3行内容供排查
+            preview = []
+            for i, r in enumerate(all_rows[:3]):
+                cells = [str(v).strip() for v in r if v is not None and str(v).strip() != ""]
+                preview.append(f"第{i+1}行: {cells}")
             raise Exception(
-                f"Excel中找不到包含所有配置列名的表头行。\n"
+                f"找不到包含所有配置列名的表头行。\n"
                 f"需要的列：{self.ch_column_names}\n"
-                f"Excel首行读到：{sample_header}\n"
-                f"请检查channel_map_list.py中columns列名是否和Excel表头完全一致"
+                f"Excel前3行内容：\n" + "\n".join(preview)
             )
 
         # 2) 表头 -> 实际列索引
@@ -342,50 +476,11 @@ class PinConvertApp:
                 rows.append(rec)
         return rows
 
-    def on_ch_board_selected(self, event=None):
-        """板卡型号切换：读取该板卡关联的Excel，并动态重建表单。"""
-        self._clear_ch_form()
-        board_name = self.ch_board_combo.get()
-        if not board_name:
-            return
-
-        board_info = self.channel_cfg.get(board_name, {})
-        # 取出列配置（去空白项）
-        self.ch_column_names = [c for c in board_info.get("columns", []) if str(c).strip()]
-        self.ch_key_column = board_info.get("key_column", "").strip()
-
-        raw_path = board_info.get("full_map_file", "").strip()
-        if not raw_path:
-            self._show_form_status(f"板卡[{board_name}]未配置 full_map_file（Excel文件路径）")
-            return
-
-        full_path = resource_path(raw_path)
-        if not os.path.exists(full_path):
-            is_unc = full_path.startswith(r"\\")
-            tip = "\n请确认已连接共享盘、有访问权限" if is_unc else ""
-            self._show_form_status(f"找不到通道映射Excel：\n{full_path}{tip}")
-            return
-
-        if not self.ch_column_names:
-            self._show_form_status(f"板卡[{board_name}]未配置 columns（需显示的列名）")
-            return
-
-        try:
-            self.ch_excel_rows = self._read_excel_rows(full_path)
-        except Exception as e:
-            self._show_form_status(f"读取Excel失败：\n{e}")
-            return
-
-        if not self.ch_excel_rows:
-            self._show_form_status(f"Excel中未找到可显示的数据行，请检查列名配置：\n{self.ch_column_names}")
-            return
-
-        self._build_ch_form()
-
     def _build_ch_form(self):
         """按配置列动态生成表单：左侧列名Label，右侧取值控件（关键列为下拉框，其余为只读框）。"""
         if not self.ch_column_names:
             return
+        self._clear_ch_form()   # 先清掉"正在读取..."等提示文字
 
         for i, col in enumerate(self.ch_column_names):
             # 左侧：列名文本
@@ -436,15 +531,12 @@ class PinConvertApp:
             val = matched.get(col, "") if matched else ""
             widget.set(str(val) if val not in (None, "nan") else "")
 
-    # ========== 标签页3回调：打开当前板卡对应的Excel映射文件 ==========
+    # ========== 标签页3回调：打开当前机台对应的Excel映射文件 ==========
     def open_channel_map_file(self):
-        board_name = self.ch_board_combo.get()
-        board_info = self.channel_cfg.get(board_name, {})
-        raw_path = board_info.get("full_map_file", "").strip()
-        if not raw_path:
-            messagebox.showinfo("提示", "当前板卡未配置完整映射文件路径")
+        full_path = self.current_excel_path
+        if not full_path:
+            messagebox.showinfo("提示", "当前机台未配置Excel文件路径")
             return
-        full_path = resource_path(raw_path)
         is_unc = full_path.startswith(r"\\")
         if not os.path.exists(full_path):
             tip = ""
