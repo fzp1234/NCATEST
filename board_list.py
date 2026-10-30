@@ -902,7 +902,7 @@ BOARD_CFG = {
                 "F12X/Y": "DGND"
             }
         },
-        "数字板NJONE": {
+        "数字板NJONE1": {
             "C1(花面朝上)(DPS1_M)": {
                 "A1": "DPS_DUTSNS10_2",
                 "A1X/Y": "DPS_DUTFRC10_2",
@@ -1066,7 +1066,7 @@ BOARD_CFG = {
                 "F13": "PB_IO3",
                 "F13X/Y": "GND"
             },
-            "C2(花面朝下)(DPS1_D)": {
+            "C4(花面朝下)(DPS1_D)": {
                 "A1": "DPS_DUTSNS10_2",
                 "A1X/Y": "DPS_DUTFRC10_2",
                 "A2": "DPS_DUTSNS10_3",
@@ -1224,7 +1224,7 @@ BOARD_CFG = {
                 "F13": "PB_IO3",
                 "F13X/Y": "GND"
             },
-            "C3(花面朝上)(DPS1_M)": {
+            "C3(花面朝上)(DPS_M)": {
                 "A1": "DPS_DUTSNS22_2",
                 "A1X/Y": "DPS_DUTFRC22_2",
                 "A2": "DPS_DUTSNS22_3",
@@ -1387,7 +1387,7 @@ BOARD_CFG = {
                 "F13": "PB_IO6",
                 "F13X/Y": "GND"
             },
-            "C4(花面朝下)(DPS2_D)": {
+            "C2(花面朝下)(DPS2_D)": {
                 "A1": "DPS_DUTSNS22_2",
                 "A1X/Y": "DPS_DUTFRC22_2",
                 "A2": "DPS_DUTSNS22_3",
@@ -1544,7 +1544,7 @@ BOARD_CFG = {
                 "F12X/Y": "GND",
                 "F13": "PB_IO6",
                 "F13X/Y": "GND"
-},
+            },
             "C5(花面朝上)(PE1_M)": {
                 "A1": "PE_CH_OUT72",
                 "A1X/Y": "GND",
@@ -1624,7 +1624,7 @@ BOARD_CFG = {
                 "C12X/Y": "GND",
                 "C13": "PB_SPI1_MOSI",
                 "C13X/Y": "GND",
-                "D1": "PB_SPI3_CLK",
+                "D1": "PB_SPI1_MISO",
                 "D1X/Y": "GND",
                 "D2": "PE_CH_OUT57",
                 "D2X/Y": "GND",
@@ -1676,7 +1676,7 @@ BOARD_CFG = {
                 "E12X/Y": "GND",
                 "E13": "PB_SPI1_RST_N",
                 "E13X/Y": "GND",
-                "F1": "PB_SPI3_CS_N",
+                "F1": "PB_IO1",
                 "F1X/Y": "GND",
                 "F2": "PE_CH_OUT48",
                 "F2X/Y": "GND",
@@ -1703,7 +1703,7 @@ BOARD_CFG = {
                 "F13": "PE_CH_OUT14",
                 "F13X/Y": "GND"
             },
-            "C6(花面朝下)(PE1_D)": {
+            "C8(花面朝下)(PE1_D)": {
                 "A1": "PE_CH_OUT72",
                 "A1X/Y": "GND",
                 "A2": "PE_CH_OUT60",
@@ -2019,7 +2019,7 @@ BOARD_CFG = {
                 "F13": "PE_CH_OUT86",
                 "F13X/Y": "GND"
             },
-            "C8(花面朝下)(PE2_D)": {
+            "C6(花面朝下)(PE2_D)": {
                 "A1": "PE_CH_OUT144",
                 "A1X/Y": "GND",
                 "A2": "PE_CH_OUT132",
@@ -7115,7 +7115,7 @@ BOARD_CFG = {
             }
 
         },
-        "主控板分发板C(YMTC用)": {
+        "主控板分发板D(YMTC用)": {
             "DSA0(花面朝上)": {
                 "A1": "NA",
                 "A1X/Y": "NA",
@@ -8381,7 +8381,7 @@ BOARD_CFG = {
                 "F13X/Y": "NA"
              }
         },
-        "主控板分发板D(YMTC用)": {
+        "主控板分发板C(YMTC用)": {
             "DSA8(花面朝上)": {
                 "A1": "NA",
                 "A1X/Y": "NA",

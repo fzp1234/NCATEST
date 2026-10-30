@@ -4,7 +4,9 @@ import os
 import csv
 import sys
 import threading
+import re
 from openpyxl import load_workbook
+
 
 def resource_path(relative_path):
     # UNC网络共享路径直接返回，不拼接本地目录
@@ -16,34 +18,30 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
-# ===== 替换原来的 json 加载方式 =====
+
+# ===== 导入配置（已删除 board_list.BOARD_CFG，完全不依赖）=====
 from cable_list import CABLE_DATA
-from board_list import BOARD_CFG
 from flip_list import FLIP_LIST
 from img_code_map import map_cable, map_board, map_conn, map_if, map_mode
-
-# ==========【新增导入装配场景配置】==========
 from scene_list import SCENE_LIST
-
-# ==========【新增：机台-槽位-Excel映射配置】==========
 from machine_slot_map import MACHINE_CONFIG
+from board_excel_map import BOARD_EXCEL_PATH_MAP
 
 
 class PinConvertApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("线缆引脚定义生成工具v1.8")
+        self.root.title("线缆引脚定义生成工具v1.9")
         self.root.geometry("1080x520")
 
         # ========== 新增：顶部标签页容器 ==========
         self.notebook = ttk.Notebook(root)
         self.notebook.pack(fill="both", expand=True, padx=5, pady=5)
 
-        # 标签页1：引脚生成页面【增加横竖滚动，改为 self.tab1】
+        # 标签页1：引脚生成页面【增加横竖滚动】
         self.tab1 = tk.Frame(self.notebook)
         self.notebook.add(self.tab1, text="引脚定义生成")
 
-        # ========== 【核心改动：tab1增加Canvas+横竖滚动条】 ==========
         tab1_canvas = tk.Canvas(self.tab1)
         scroll_v = ttk.Scrollbar(self.tab1, orient="vertical", command=tab1_canvas.yview)
         scroll_h = ttk.Scrollbar(self.tab1, orient="horizontal", command=tab1_canvas.xview)
@@ -56,36 +54,46 @@ class PinConvertApp:
         self.tab1.columnconfigure(0, weight=1)
 
         master_frame = tk.Frame(tab1_canvas)
-        tab1_canvas.create_window((0,0), window=master_frame, anchor="nw")
+        tab1_canvas.create_window((0, 0), window=master_frame, anchor="nw")
 
         def update_scroll_region(event):
             tab1_canvas.configure(scrollregion=tab1_canvas.bbox("all"))
+
         master_frame.bind("<Configure>", update_scroll_region)
 
-        # 鼠标滚轮：仅在tab1画布上悬浮才滚动（修复全局滚轮问题）
+        # 鼠标滚轮：仅在tab1画布上悬浮才滚动
         def _on_mousewheel(event):
             if tab1_canvas.winfo_containing(event.x_root, event.y_root) == tab1_canvas:
-                tab1_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+                tab1_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
         self.root.bind_all("<MouseWheel>", _on_mousewheel)
-        # ========== 滚动区域改造完成 ==========
 
         master_frame.columnconfigure(0, weight=1)
         master_frame.columnconfigure(1, weight=0)
 
-        # ====滚动信息内容====
         self.scroll_text = "欢迎使用线缆引脚定义生成工具    该工具仅限御渡半导体内部人员使用    如有优化建议或遇使用问题请联系开发人员    "
         self.scroll_pos = 0
 
         self.cable_data = CABLE_DATA
-        self.board_cfg = BOARD_CFG
         self.flip_list = FLIP_LIST
-        self.board_dict = self.board_cfg.get("boards", {})
-        self.board_names = list(self.board_dict.keys())
+        self.board_excel_map = BOARD_EXCEL_PATH_MAP
+
+        # 板卡Excel缓存 key=板卡名
+        # 【优化后缓存结构】
+        # {
+        #   "__full_conn_list": [完整表头字符串1, 完整表头字符串2...],
+        #   "C1(花面朝上)(DPS1_M)": {pin:net},
+        #   "C1(花面朝下)(DPS1_M)": {pin:net}
+        # }
+        self._board_excel_cache = {}
+
+        # 板卡下拉列表直接取自board_excel_map的keys，不再依赖board_list.py
+        self.board_names = list(self.board_excel_map.keys())
         self.cable_list = list(self.cable_data.keys())
         self.line_widgets = []
         self.selected_row_idx = 0
 
-        # ====第0行：线缆选择【增加线缆长度下拉 + 物料编码显示Label + 【查看线缆图】按钮】====
+        # ====第0行：线缆选择====
         row1 = tk.Frame(master_frame)
         row1.grid(row=0, column=0, columnspan=2, pady=20, padx=10, sticky="ew")
         tk.Label(row1, text="转接线缆选择：").pack(side="left")
@@ -95,22 +103,19 @@ class PinConvertApp:
         if len(self.cable_list) > 0:
             self.cable_combo.current(0)
 
-        # ====================【新增线缆长度下拉控件】====================
         tk.Label(row1, text="线缆长度：").pack(side="left", padx=(20, 0))
         self.cable_len_combo = ttk.Combobox(row1, state="readonly", width=10)
         self.cable_len_combo.pack(side="left", padx=8)
         self.cable_len_combo.bind("<<ComboboxSelected>>", self.on_length_changed)
 
-        # ====================【新增：线缆物料编码只读显示框】====================
         tk.Label(row1, text="线缆物料编码：").pack(side="left", padx=(20, 0))
         self.cable_code_var = tk.StringVar()
         tk.Label(row1, textvariable=self.cable_code_var, width=12, bg="white", relief="solid").pack(side="left", padx=8)
 
-        # ====================【新增：查看线缆图片按钮】====================
         self.cable_img_btn = ttk.Button(row1, text="查看线缆", command=self.show_cable_image)
-        self.cable_img_btn.pack(side="left", padx=(10,0))
+        self.cable_img_btn.pack(side="left", padx=(10, 0))
 
-        # 第1行：左侧表格区域 + 右侧教程
+        # 第1行：表格 + 教程
         table_area = tk.Frame(master_frame)
         table_area.grid(row=1, column=0, padx=10, sticky="nw")
         self.grid_container = tk.Frame(table_area)
@@ -121,80 +126,68 @@ class PinConvertApp:
 
         tutorial_text = (
             "1. 选择对应的转接线缆\n"
-            "2. 逐行选择和线缆对接的板卡型号和连接器位号\n"
+            "2. 逐行选择和线缆对接的板卡型号和连接器位号(连接器自动从板卡Excel解析)\n"
             "3. 选择线缆的对接方式（花面朝上/朝下）\n"
-            "4. 点击【查看板卡图】查看当前行板卡示意图\n"
+            "4. 点击【查看板卡】查看当前行板卡示意图\n"
             "5. 点击【显示对接示意图】查看当前选中行的板卡连接器示意图\n"
             "6. 点击\"选择保存位置\"设置输出路径\n"
             "7. 点击\"生成引脚定义CSV文件\"\n"
             "8. CSV文件的G列为线缆输出端连接器PIN脚位号 \n"
-            "9. CSV文件的C列为线缆输出端连接器PIN脚对应的网络名 \n"
+            "9. CSV文件的C列为线缆输出端连接器PIN脚对应的网络名【网络全部读取自板卡Excel】 \n"
         )
         tk.Label(tutorial_frame, text=tutorial_text, justify="left",
                  font=("微软雅黑", 9), fg="#333333").pack(anchor="w")
 
-        # =========表格表头【新增一列：操作】=========
+        # 表格表头
         tk.Label(self.grid_container, text="板卡型号", width=16).grid(row=0, column=0, padx=8, sticky="w")
-        tk.Label(self.grid_container, text="板卡连接器位号", width=18).grid(row=0, column=1, padx=8, sticky="w")
+        tk.Label(self.grid_container, text="板卡连接器位号", width=28).grid(row=0, column=1, padx=8, sticky="w")
         tk.Label(self.grid_container, text="线缆连接器位号", width=12).grid(row=0, column=2, padx=8, sticky="w")
         tk.Label(self.grid_container, text="对接方式", width=12).grid(row=0, column=3, padx=8, sticky="w")
         tk.Label(self.grid_container, text="操作", width=10).grid(row=0, column=4, padx=8, sticky="w")
 
-        # ====【全局对接示意图按钮】跨两列，放在表格下方====
         img_btn_frame = tk.Frame(master_frame)
         img_btn_frame.grid(row=2, column=0, columnspan=1, pady=(0, 4), padx=10, sticky="w")
         self.global_img_btn = ttk.Button(img_btn_frame, text="显示对接示意图", command=self.show_selected_row_image)
         self.global_img_btn.pack(side="left")
 
-        # ====保存路径输入行，跨左右两列====
         row_path = tk.Frame(master_frame)
         row_path.grid(row=3, column=0, columnspan=2, pady=(4, 8), padx=10, sticky="ew")
-
         tk.Label(row_path, text="输出文件路径：").pack(side="left")
         self.save_path_var = tk.StringVar()
         tk.Entry(row_path, textvariable=self.save_path_var, width=56).pack(side="left", padx=6)
         tk.Button(row_path, text="选择保存位置", command=self.select_save_path).pack(side="left")
 
-        # ====【重点：生成CSV按钮位置保持不变，仍然在 row=4】====
-        gen_btn = tk.Button(master_frame, text="生成转接后引脚定义CSV文件", command=self.generate_csv, bg="#337ab7", fg="white",
-                            height=2)
+        gen_btn = tk.Button(master_frame, text="生成转接后引脚定义CSV文件", command=self.generate_csv, bg="#337ab7",
+                            fg="white", height=2)
         gen_btn.grid(row=4, column=0, columnspan=2, pady=20)
 
-        # ====底部状态栏，放在master_frame最后一行，跨两列====
         status_bar = tk.Frame(master_frame, relief="sunken", bd=1, bg="#f0f0f0")
         status_bar.grid(row=5, column=0, columnspan=2, sticky="ew")
-
         tk.Label(status_bar, text="作者：冯志鹏", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="left", padx=10)
         self.scroll_label = tk.Label(status_bar, text="", bg="#f0f0f0", font=("微软雅黑", 9), fg="#333333")
         self.scroll_label.pack(side="left", fill="x", expand=True)
-        tk.Label(status_bar, text="版本：v1.8", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
+        tk.Label(status_bar, text="版本：v1.9", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
 
         self.update_scroll()
         self.on_cable_changed()
 
         # ========== 标签页2：接线装配说明==========
         self.tab2 = tk.Frame(self.notebook)
-        self.notebook.add(self.tab2, text="接线装配说明")
-
+        self.notebook.add(self.tab2, text="接线装配说明(待开发)")
         tab2_main = tk.Frame(self.tab2)
         tab2_main.pack(fill="both", expand=True, padx=20, pady=20)
 
-        # 第一行：场景下拉 + 看图按钮
         scene_frame = tk.Frame(tab2_main)
-        scene_frame.pack(anchor="w", pady=(0,10))
-        tk.Label(scene_frame, text="装配场景选择：", font=("微软雅黑",11)).pack(side="left")
+        scene_frame.pack(anchor="w", pady=(0, 10))
+        tk.Label(scene_frame, text="装配场景选择：", font=("微软雅黑", 11)).pack(side="left")
         self.scene_combo = ttk.Combobox(scene_frame, state="readonly", width=20)
         self.scene_combo.pack(side="left", padx=10)
         scene_btn = ttk.Button(scene_frame, text="查看装配示意图", command=self.show_scene_image)
         scene_btn.pack(side="left", padx=10)
-        # 绑定场景切换事件，自动加载文档列表
         self.scene_combo.bind("<<ComboboxSelected>>", self.on_scene_selected)
 
-        # 第二块：关联文档区域
         doc_frame = tk.LabelFrame(tab2_main, text="该场景关联文档", padx=10, pady=10)
         doc_frame.pack(fill="both", expand=True)
-
-        # 文档列表 + 滚动条
         list_container = tk.Frame(doc_frame)
         list_container.pack(fill="both", expand=True)
         self.scene_doc_listbox = tk.Listbox(list_container, font=("微软雅黑", 9))
@@ -202,16 +195,13 @@ class PinConvertApp:
         self.scene_doc_listbox.config(yscrollcommand=scrollbar.set)
         self.scene_doc_listbox.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
-        # 绑定双击打开文档
         self.scene_doc_listbox.bind("<Double-Button-1>", lambda e: self.open_selected_scene_doc())
 
-        # 文档操作按钮行
         doc_btn_frame = tk.Frame(doc_frame)
-        doc_btn_frame.pack(pady=(8,0), anchor="w")
+        doc_btn_frame.pack(pady=(8, 0), anchor="w")
         self.open_doc_btn = ttk.Button(doc_btn_frame, text="打开选中文档", command=self.open_selected_scene_doc)
         self.open_doc_btn.pack()
 
-        # 初始化场景下拉选项
         self.scene_cfg = SCENE_LIST
         scene_names = list(self.scene_cfg.keys())
         self.scene_combo["values"] = scene_names
@@ -219,16 +209,14 @@ class PinConvertApp:
             self.scene_combo.current(0)
             self.on_scene_selected()
 
-        # ======================【标签页3：软硬件通道映射（动态读取Excel版）】======================
+        # ======================标签页3：软硬件通道映射======================
         self.tab3 = tk.Frame(self.notebook)
         self.notebook.add(self.tab3, text="软硬件通道映射")
         tab3_main = tk.Frame(self.tab3)
         tab3_main.pack(fill="both", expand=True, padx=30, pady=20)
 
-        # ========== 第1行：机台型号 + 槽位号 + 板卡名称（自动联动） ==========
         row_ch_top = tk.Frame(tab3_main)
         row_ch_top.pack(anchor="w", pady=(0, 8))
-
         tk.Label(row_ch_top, text="机台型号：", font=("微软雅黑", 11)).pack(side="left")
         self.machine_combo = ttk.Combobox(row_ch_top, state="readonly", width=18)
         self.machine_combo.pack(side="left", padx=(10, 20))
@@ -244,27 +232,23 @@ class PinConvertApp:
         tk.Label(row_ch_top, textvariable=self.ch_board_var, width=20,
                  bg="white", relief="solid", anchor="w", font=("微软雅黑", 11)).pack(side="left", padx=10)
 
-        # 第2块：动态表单区域（列名+取值，动态生成）
         self.ch_form_frame = tk.LabelFrame(tab3_main, text="通道映射信息（对应Excel表格）", padx=12, pady=8)
         self.ch_form_frame.pack(fill="both", expand=True, pady=(4, 10), anchor="w")
 
-        # 第3行：打开完整Excel映射文件按钮
         row_btn = tk.Frame(tab3_main)
         row_btn.pack(anchor="w", pady=(0, 0))
         self.open_ch_excel_btn = ttk.Button(row_btn, text="打开机台通道映射Excel", command=self.open_channel_map_file)
         self.open_ch_excel_btn.pack()
 
-        # tab3 运行时状态
         self.ch_excel_rows = []
         self.ch_column_names = []
         self.ch_key_column = ""
         self.ch_form_rows = {}
         self.ch_key_combo = None
-        self.current_excel_path = ""   # 当前机台的Excel路径
-        self._excel_cache = {}        # {excel路径: {sheet名: 行数据list}}，避免重复读文件
-        self._ch_req_id = 0           # 请求ID，快速切槽位时丢弃旧线程的结果
+        self.current_excel_path = ""
+        self._excel_cache = {}
+        self._ch_req_id = 0
 
-        # ==== 初始化配置 ====
         self.machine_cfg = MACHINE_CONFIG
         machine_names = list(self.machine_cfg.keys())
         self.machine_combo["values"] = machine_names
@@ -272,11 +256,100 @@ class PinConvertApp:
             self.machine_combo.current(0)
             self.on_machine_selected()
 
-    # ============================================================
-    # 机台 / 槽位 联动回调
-    # ============================================================
+    def _load_board_excel_cache(self, board_name):
+        """【修复版】加载板卡Excel，解决表头空单元格导致连接器网络错位"""
+        if board_name in self._board_excel_cache:
+            return self._board_excel_cache[board_name]
+
+        if board_name in self.board_excel_map:
+            excel_path = resource_path(self.board_excel_map[board_name])
+        else:
+            excel_path = resource_path(f"conn_excel/{board_name}.xlsx")
+
+        if not os.path.exists(excel_path):
+            raise FileNotFoundError(f"板卡[{board_name}]对应的Excel文件不存在：{excel_path}")
+
+        wb = load_workbook(excel_path, data_only=True)
+        ws = wb["Sheet1"]
+        all_rows = list(ws.iter_rows(values_only=True))
+        wb.close()
+        if not all_rows:
+            raise Exception(f"{excel_path} Sheet1为空")
+
+        header_row = all_rows[0]
+        # ========== 改动点1：建立 {连接器全名:原始列索引} 映射 ==========
+        conn_col_map = {}
+        for col_idx, cell_text in enumerate(header_row):
+            if cell_text is None:
+                continue
+            col_str = str(cell_text).strip()
+            if not col_str:
+                continue
+            conn_col_map[col_str] = col_idx
+
+        full_conn_list = list(conn_col_map.keys())
+        board_conn_data = {
+            "__full_conn_list": full_conn_list
+        }
+        # 初始化每个连接器的pin字典
+        for conn_name in full_conn_list:
+            board_conn_data[conn_name] = {}
+
+        if len(full_conn_list) == 0:
+            raise Exception(f"板卡[{board_name}]Excel表头未解析到任何连接器，请检查表头")
+
+        # ========== 改动点2：按映射的原始列号取值，不再用循环col_idx偏移 ==========
+        for row in all_rows[1:]:
+            pin_sig = row[0]
+            if pin_sig is None or str(pin_sig).strip() == "":
+                continue
+            pin_sig = str(pin_sig).strip()
+            # 遍历每一个连接器，取它绑定的原始列号
+            for conn_name, real_col_idx in conn_col_map.items():
+                if real_col_idx >= len(row):
+                    net_str = ""
+                else:
+                    net_val = row[real_col_idx]
+                    net_str = str(net_val).strip() if net_val is not None else ""
+                board_conn_data[conn_name][pin_sig] = net_str
+
+        self._board_excel_cache[board_name] = board_conn_data
+        return board_conn_data
+
+    def _get_board_network(self, board_name, full_conn_text, lookup_pin):
+        """【优化】仅3入参，只查表，不处理朝向、翻转"""
+        try:
+            board_data = self._load_board_excel_cache(board_name)
+        except Exception as e:
+            print(f"读取板卡Excel异常:{e}")
+            return ""
+
+        if full_conn_text not in board_data:
+            return ""
+        pin_net_dict = board_data[full_conn_text]
+        net = pin_net_dict.get(lookup_pin, "")
+        return net
+
+    def on_board_selected(self, board_combo, conn_combo, row_idx):
+        """【改】连接器下拉填充【完整表头文本】"""
+        self.selected_row_idx = row_idx
+        selected_board = board_combo.get()
+        try:
+            board_data = self._load_board_excel_cache(selected_board)
+            conn_full_list = board_data.get("__full_conn_list", [])
+        except Exception as e:
+            err_msg = f"读取板卡【{selected_board}】Excel失败：\n{e}"
+            messagebox.showerror("板卡Excel解析错误", err_msg)
+            print(err_msg)
+            conn_full_list = []
+
+        conn_combo["values"] = conn_full_list
+        if len(conn_full_list) > 0:
+            conn_combo.current(0)
+        else:
+            conn_combo.set("")
+
     def on_machine_selected(self, event=None):
-        """机台型号切换：刷新槽位号下拉列表。"""
         machine_name = self.machine_combo.get()
         machine_info = self.machine_cfg.get(machine_name, {})
         slot_dict = machine_info.get("slots", {})
@@ -289,21 +362,16 @@ class PinConvertApp:
         self.on_slot_selected()
 
     def on_slot_selected(self, event=None):
-        """槽位号切换：读取该槽位对应的sheet，刷新通道映射表单。"""
         self._reset_ch_state()
         machine_name = self.machine_combo.get()
         slot_name = self.slot_combo.get()
         machine_info = self.machine_cfg.get(machine_name, {})
         slot_dict = machine_info.get("slots", {})
-
-        # 显示板卡名称（value 直接就是板卡名）
         board_name = slot_dict.get(slot_name, "")
         self.ch_board_var.set(board_name)
 
         raw_excel = machine_info.get("excel_file", "").strip()
-        sheet_name = slot_name.strip()   # slot key 本身就是 sheet 名
-
-        # 根据板卡名取对应的列结构；找不到则回退到机台级配置（兼容旧格式）
+        sheet_name = slot_name.strip()
         board_columns = machine_info.get("board_columns", {})
         col_cfg = board_columns.get(board_name, {})
         columns = col_cfg.get("columns", []) or machine_info.get("columns", [])
@@ -330,29 +398,23 @@ class PinConvertApp:
             self._show_form_status(f"找不到通道映射Excel：\n{self.current_excel_path}{tip}")
             return
 
-        # 每次切槽位生成新请求ID，旧线程结果直接丢弃
         self._ch_req_id += 1
         req_id = self._ch_req_id
-
-        # 缓存命中直接用，不走后台线程（空结果不缓存，避免坏数据）
         cache = self._excel_cache.get(self.current_excel_path, {})
         if sheet_name in cache:
             self.ch_excel_rows = cache[sheet_name]
             self._build_ch_form()
             return
 
-        # 未命中：后台线程读Excel，避免阻塞UI
         self._show_form_status("正在读取Excel，请稍候...")
 
         def _worker():
             try:
                 rows = self._read_excel_rows(self.current_excel_path, sheet_name)
-                # 非空才写缓存
                 if rows:
                     c = self._excel_cache.get(self.current_excel_path, {})
                     c[sheet_name] = rows
                     self._excel_cache[self.current_excel_path] = c
-                # 切回主线程更新UI，附带请求ID校验
                 self.root.after(0, lambda: self._on_excel_loaded(rows, sheet_name, req_id))
             except Exception as e:
                 err = str(e)
@@ -361,8 +423,6 @@ class PinConvertApp:
         threading.Thread(target=_worker, daemon=True).start()
 
     def _on_excel_loaded(self, rows, sheet_name, req_id=None):
-        """后台线程读完Excel后，主线程回调：填充数据并生成表单。"""
-        # 旧请求的结果直接丢弃（用户已经切到别的槽位了）
         if req_id is not None and req_id != self._ch_req_id:
             return
         self.ch_excel_rows = rows
@@ -376,35 +436,24 @@ class PinConvertApp:
             return
         self._build_ch_form()
 
-    # ============================================================
-    # 标签页3：软硬件通道映射（动态读取Excel版）
-    # ============================================================
     def _clear_ch_form(self):
-        """清空通道映射表单控件（保留列名等状态变量，由调用方负责重置）。"""
         for w in self.ch_form_frame.winfo_children():
             w.destroy()
         self.ch_form_rows = {}
         self.ch_key_combo = None
 
     def _reset_ch_state(self):
-        """重置所有通道映射运行时状态。"""
         self._clear_ch_form()
         self.ch_excel_rows = []
         self.ch_column_names = []
         self.ch_key_column = ""
 
     def _show_form_status(self, msg):
-        """在表单区域显示提示信息（只清控件，不动状态变量）。"""
         self._clear_ch_form()
         tk.Label(self.ch_form_frame, text=msg, fg="#a00",
                  font=("微软雅黑", 10), justify="left").grid(row=0, column=0, padx=6, pady=10, sticky="w")
 
     def _read_excel_rows(self, full_path, sheet_name=None):
-        """
-        读取通道映射Excel（openpyxl，无pandas依赖），按 self.ch_column_names 配置的列提取数据。
-        指定 sheet_name 时读取该sheet，否则读取active sheet。
-        自动定位包含全部配置列名的表头行，返回数据行列表（每行为 dict）。
-        """
         wb = load_workbook(filename=full_path, data_only=True)
         if sheet_name:
             if sheet_name not in wb.sheetnames:
@@ -413,18 +462,14 @@ class PinConvertApp:
             ws = wb[sheet_name]
         else:
             ws = wb.active
-        # 一次性读取所有行（普通模式，小文件无压力）
         all_rows = list(ws.iter_rows(values_only=True))
         wb.close()
-
         if not all_rows:
             raise Exception("Excel文件为空或没有读到任何行")
 
-        # 1) 定位表头行：找到同时包含所有配置列名的那一行
         header_row_idx = None
         header = None
         for i, row in enumerate(all_rows):
-            # 把行内所有单元格转成字符串集合（去空格、跳过None）
             cell_vals = set()
             for v in row:
                 if v is not None and str(v).strip() != "":
@@ -433,9 +478,7 @@ class PinConvertApp:
                 header_row_idx = i
                 header = row
                 break
-
         if header is None:
-            # 没找到同时包含所有列名的行，列出前3行内容供排查
             preview = []
             for i, r in enumerate(all_rows[:3]):
                 cells = [str(v).strip() for v in r if v is not None and str(v).strip() != ""]
@@ -445,8 +488,6 @@ class PinConvertApp:
                 f"需要的列：{self.ch_column_names}\n"
                 f"Excel前3行内容：\n" + "\n".join(preview)
             )
-
-        # 2) 表头 -> 实际列索引
         header_str = [str(v).strip() if v is not None else "" for v in header]
         col_index_map = {}
         missing_cols = []
@@ -460,39 +501,24 @@ class PinConvertApp:
                 f"Excel表头缺少配置列：{missing_cols}\n"
                 f"实际表头：{header_str}"
             )
-
-        # 3) 从表头下一行开始逐行提取配置列的值
         rows = []
         for row in all_rows[header_row_idx + 1:]:
             rec = {}
             for col_name, idx in col_index_map.items():
                 val = row[idx] if idx < len(row) else None
-                if val is None or str(val).strip() == "":
-                    rec[col_name] = ""
-                else:
-                    rec[col_name] = str(val).strip()
-            # 跳过整行都为空的记录
+                rec[col_name] = str(val).strip() if (val is not None and str(val).strip() != "") else ""
             if any(rec.values()):
                 rows.append(rec)
         return rows
 
     def _build_ch_form(self):
-        """按配置列动态生成表单：左侧列名Label，右侧取值控件（关键列为下拉框，其余为只读框）。"""
         if not self.ch_column_names:
             return
-        self._clear_ch_form()   # 先清掉"正在读取..."等提示文字
-
+        self._clear_ch_form()
         for i, col in enumerate(self.ch_column_names):
-            # 左侧：列名文本
-            tk.Label(self.ch_form_frame, text=col, font=("微软雅黑", 11)).grid(
-                row=i, column=0, sticky="w", padx=6, pady=6)
-
+            tk.Label(self.ch_form_frame, text=col, font=("微软雅黑", 11)).grid(row=i, column=0, sticky="w", padx=6, pady=6)
             if col == self.ch_key_column:
-                # 关键列（嵌入式通道）：下拉框，选项取Excel该列的全部唯一值
-                values = list(dict.fromkeys(
-                    r.get(self.ch_key_column, "") for r in self.ch_excel_rows
-                    if r.get(self.ch_key_column, "")
-                ))
+                values = list(dict.fromkeys(r.get(self.ch_key_column, "") for r in self.ch_excel_rows if r.get(self.ch_key_column, "")))
                 combo = ttk.Combobox(self.ch_form_frame, state="readonly", width=30)
                 combo["values"] = values
                 combo.grid(row=i, column=1, sticky="w", padx=6, pady=6)
@@ -500,38 +526,29 @@ class PinConvertApp:
                 self.ch_key_combo = combo
                 self.ch_form_rows[col] = combo
             else:
-                # 其余列：只读显示框，选中关键列后自动填充对应值
                 var = tk.StringVar()
-                lbl = tk.Label(self.ch_form_frame, textvariable=var, width=30, bg="white",
-                               relief="solid", anchor="w", font=("微软雅黑", 11))
+                lbl = tk.Label(self.ch_form_frame, textvariable=var, width=30, bg="white", relief="solid", anchor="w", font=("微软雅黑", 11))
                 lbl.grid(row=i, column=1, sticky="w", padx=6, pady=6)
                 self.ch_form_rows[col] = var
-
-        # 默认选中关键列第一项，联动显示其余列
         if self.ch_key_combo is not None and self.ch_key_combo["values"]:
             self.ch_key_combo.current(0)
             self.on_ch_selected()
 
     def on_ch_selected(self, event=None):
-        """关键列（嵌入式通道）选中：按Excel对应行刷新其余列取值。"""
         if self.ch_key_combo is None or not self.ch_key_column:
             return
         key_val = self.ch_key_combo.get()
-
-        # 在Excel数据中查找关键列值匹配的那一行
         matched = None
         for r in self.ch_excel_rows:
             if str(r.get(self.ch_key_column, "")) == key_val:
                 matched = r
                 break
-
         for col, widget in self.ch_form_rows.items():
             if col == self.ch_key_column:
                 continue
             val = matched.get(col, "") if matched else ""
             widget.set(str(val) if val not in (None, "nan") else "")
 
-    # ========== 标签页3回调：打开当前机台对应的Excel映射文件 ==========
     def open_channel_map_file(self):
         full_path = self.current_excel_path
         if not full_path:
@@ -539,9 +556,7 @@ class PinConvertApp:
             return
         is_unc = full_path.startswith(r"\\")
         if not os.path.exists(full_path):
-            tip = ""
-            if is_unc:
-                tip = "\n⚠️网络共享路径，请确认已连接共享盘、有访问权限"
+            tip = "\n⚠️网络共享路径，请确认已连接共享盘、有访问权限" if is_unc else ""
             messagebox.showerror("文件不存在", f"找不到通道映射Excel：\n{full_path}{tip}")
             return
         try:
@@ -552,19 +567,16 @@ class PinConvertApp:
                 err_msg += "\n可能原因：未映射共享盘/无访问权限/共享断开"
             messagebox.showerror("打开失败", f"无法打开Excel：{err_msg}")
 
-    # ==========【tab2新增：场景切换回调，刷新文档列表】==========
     def on_scene_selected(self, event=None):
         scene_name = self.scene_combo.get()
         scene_info = self.scene_cfg.get(scene_name, {})
         doc_list = scene_info.get("docs", [])
         self.scene_doc_listbox.delete(0, tk.END)
-        # 存入实例变量保存文档路径映射
         self._scene_docs_cache = doc_list
         for doc_item in doc_list:
             display_name = doc_item.get("name", "")
             self.scene_doc_listbox.insert(tk.END, display_name)
 
-    # ==========【tab2新增：打开选中文档，支持UNC网络共享路径】==========
     def open_selected_scene_doc(self):
         sel_idx = self.scene_doc_listbox.curselection()
         if not sel_idx:
@@ -574,12 +586,9 @@ class PinConvertApp:
         doc_item = self._scene_docs_cache[idx]
         raw_path = doc_item.get("path", "").strip()
         full_path = resource_path(raw_path)
-
         is_unc = full_path.startswith(r"\\")
         if not os.path.exists(full_path):
-            tip = ""
-            if is_unc:
-                tip = "\n⚠️网络共享路径，请确认已连接共享盘、有访问权限"
+            tip = "\n⚠️网络共享路径，请确认已连接共享盘、有访问权限" if is_unc else ""
             messagebox.showerror("文件不存在", f"找不到文档：\n{full_path}{tip}")
             return
         try:
@@ -590,7 +599,6 @@ class PinConvertApp:
                 err_msg += "\n可能原因：未映射共享盘/无访问权限/共享断开"
             messagebox.showerror("打开失败", f"无法打开文档：{err_msg}")
 
-    # ==========【新增函数：打开线缆图片弹窗】==========
     def show_cable_image(self):
         cable_name = self.cable_combo.get()
         base_name = f"cable_{cable_name}"
@@ -599,7 +607,6 @@ class PinConvertApp:
         gif_path = os.path.join(img_folder, f"{base_name}.gif")
         self.show_full_conn_image(base_name, png_path, gif_path)
 
-    # ==========【新增函数：打开板卡图片弹窗】==========
     def show_board_image(self, board_name):
         base_name = f"board_{board_name}"
         img_folder = resource_path("conn_img")
@@ -607,7 +614,6 @@ class PinConvertApp:
         gif_path = os.path.join(img_folder, f"{base_name}.gif")
         self.show_full_conn_image(base_name, png_path, gif_path)
 
-    # ==========【新增函数：打开装配场景图片弹窗】==========
     def show_scene_image(self):
         selected_scene = self.scene_combo.get()
         base_name = f"scene_{selected_scene}"
@@ -616,7 +622,6 @@ class PinConvertApp:
         gif_path = os.path.join(img_folder, f"{base_name}.gif")
         self.show_full_conn_image(base_name, png_path, gif_path)
 
-    # ==========【新增函数：长度下拉切换，更新物料编码】==========
     def on_length_changed(self, event=None):
         cable_name = self.cable_combo.get()
         cfg = self.cable_data.get(cable_name, {})
@@ -624,17 +629,6 @@ class PinConvertApp:
         selected_len = self.cable_len_combo.get()
         code = len_dict.get(selected_len, "")
         self.cable_code_var.set(code)
-
-    def on_board_selected(self, board_combo, conn_combo, row_idx):
-        self.selected_row_idx = row_idx
-        selected_board = board_combo.get()
-        conn_dict = self.board_dict.get(selected_board, {})
-        conn_list = list(conn_dict.keys())
-        conn_combo["values"] = conn_list
-        if len(conn_list) > 0:
-            conn_combo.current(0)
-        else:
-            conn_combo.set("")
 
     def on_mode_changed(self, row_idx, event):
         self.selected_row_idx = row_idx
@@ -661,9 +655,8 @@ class PinConvertApp:
         self.line_widgets.clear()
         self.selected_row_idx = 0
 
-        # 重建表头
         tk.Label(self.grid_container, text="板卡型号", width=16).grid(row=0, column=0, padx=8, sticky="w")
-        tk.Label(self.grid_container, text="板卡连接器位号", width=18).grid(row=0, column=1, padx=8, sticky="w")
+        tk.Label(self.grid_container, text="板卡连接器位号", width=28).grid(row=0, column=1, padx=8, sticky="w")
         tk.Label(self.grid_container, text="线缆连接器位号", width=12).grid(row=0, column=2, padx=8, sticky="w")
         tk.Label(self.grid_container, text="对接方式", width=12).grid(row=0, column=3, padx=8, sticky="w")
         tk.Label(self.grid_container, text="操作", width=10).grid(row=0, column=4, padx=8, sticky="w")
@@ -674,7 +667,7 @@ class PinConvertApp:
                 cb_board.current(0)
             cb_board.grid(row=row_idx, column=0, padx=8, pady=3, sticky="w")
 
-            cb_conn = ttk.Combobox(self.grid_container, values=[], state="readonly", width=22)
+            cb_conn = ttk.Combobox(self.grid_container, values=[], state="readonly", width=36)
             cb_conn.grid(row=row_idx, column=1, padx=8, pady=3, sticky="w")
 
             lbl_if = tk.Label(self.grid_container, text=item, width=12)
@@ -684,7 +677,6 @@ class PinConvertApp:
             cb_mode.current(0)
             cb_mode.grid(row=row_idx, column=3, padx=8, pady=3, sticky="w")
 
-            # ====================【新增：板卡图片按钮】====================
             btn_board_img = ttk.Button(self.grid_container, text="查看板卡", width=8,
                                        command=lambda b=cb_board: self.show_board_image(b.get()))
             btn_board_img.grid(row=row_idx, column=4, padx=8, pady=3)
@@ -705,41 +697,40 @@ class PinConvertApp:
         if len(self.line_widgets) == 0:
             messagebox.showwarning("提示", "当前线缆没有输入接口！")
             return
-
         cable_name = self.cable_combo.get()
         cable_id = map_cable.get(cable_name, 99)
         parts_num = [str(cable_id)]
-
         for line in self.line_widgets:
             board_name = line["board_combo"].get()
-            conn_name = line["conn_combo"].get()
+            full_conn_text = line["conn_combo"].get()
             wire_if = line["if_name"]
             mode = line["mode_combo"].get()
-
             b_id = map_board.get(board_name, 99)
+            # 从完整文本提取sig用于map_conn
+            m = re.match(r"([A-Z]+\d+)\((花面朝上|花面朝下)\)", full_conn_text)
+            if m:
+                conn_sig = m.group(1)
+            else:
+                conn_sig = full_conn_text
             c_id = 99
             for key, val in map_conn.items():
-                if key in conn_name:
+                if key in conn_sig:
                     c_id = val
                     break
             i_id = map_if.get(wire_if, 99)
             m_id = map_mode.get(mode, 99)
-
             seg_num = f"{b_id}{c_id}{i_id}{m_id}"
             parts_num.append(seg_num)
-
         base_name = "_".join(parts_num)
         img_folder = resource_path("conn_img")
         png_path = os.path.join(img_folder, f"{base_name}.png")
         gif_path = os.path.join(img_folder, f"{base_name}.gif")
-
         self.show_full_conn_image(base_name, png_path, gif_path)
 
     def show_full_conn_image(self, base_name, png_path, gif_path):
         img_win = tk.Toplevel(self.root)
         img_win.title(f"示意图 - {base_name}")
         img_win.after_id = None
-
         if os.path.exists(gif_path):
             img_win.frames = []
             img_win.frame_index = 0
@@ -751,12 +742,10 @@ class PinConvertApp:
                     frame_num += 1
             except tk.TclError:
                 pass
-
             if len(img_win.frames) == 0:
                 messagebox.showerror("GIF加载失败", "GIF无有效帧！")
                 img_win.destroy()
                 return
-
             label_img = tk.Label(img_win)
             label_img.pack(expand=True)
 
@@ -824,10 +813,13 @@ class PinConvertApp:
                 "mode": line["mode_combo"].get()
             }
 
-        headers = ["板卡型号", "板卡连接器位号", "网络", "线缆连接器位号", "输入PIN脚", "对接方式", "输出PIN脚", "线缆型号", "线缆长度", "线缆物料编码"]
+        headers = ["板卡型号", "板卡连接器位号", "网络", "线缆连接器位号", "输入PIN脚", "对接方式", "输出PIN脚", "线缆型号",
+                   "线缆长度", "线缆物料编码"]
         rows = []
 
         for dest_pin, src_pin in pin_list:
+            if dest_pin == "F1_E38":
+                aaa=0
             if not src_pin:
                 if_name = ""
                 pin_num = ""
@@ -841,15 +833,19 @@ class PinConvertApp:
 
             s = line_setting.get(if_name, {"board": "", "connector": "", "mode": ""})
             lookup_pin = pin_num
-
             conn_name = s["connector"]
             gui_mode = s["mode"]
-            # =========修复翻转判断逻辑=========
-            if conn_name and gui_mode == "花面朝下":
+            board_name = s["board"]
+
+            # 上层在这里做翻转判断，查表函数不再处理朝向
+
+            if conn_name and gui_mode and (gui_mode not in conn_name):
                 flip_dict = self.flip_list.get("CONNECTOR_C", {})
                 lookup_pin = flip_dict.get(lookup_pin, lookup_pin)
 
-            net_name = self.board_dict.get(s["board"], {}).get(conn_name, {}).get(lookup_pin, "")
+            # 【3参数调用】
+            net_name = self._get_board_network(board_name, conn_name, lookup_pin)
+
             row = [s["board"], conn_name, net_name, if_name, src_pin, s["mode"], dest_pin, cable_name, cable_length,
                    cable_code]
             rows.append(row)

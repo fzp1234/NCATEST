@@ -5,7 +5,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('conn_img', 'conn_img'), ('channel_map', 'channel_map')],
+    datas=[('conn_img', 'conn_img'), ('channel_map', 'channel_map'), ('board_list', 'board_list')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

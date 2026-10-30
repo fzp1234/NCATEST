@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='Remaping_V1.7',
+    name='Remaping_v1.8',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

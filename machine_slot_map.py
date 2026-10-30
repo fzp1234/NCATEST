@@ -58,12 +58,16 @@ MACHINE_CONFIG = {
         },
         "board_columns": {
             "数字板D800": {
-                "columns": ["嵌入式对应通道", "DUT网络名", "对应MVP", "PE位号", "数字板C端连接器", "对应DSA号", "DSA G端连接器位号"],  # 列结构
+                "columns": ["嵌入式对应通道", "DUT网络名", "对应MVP", "PE位号", "数字板C端连接器", "C端连接器PIN", "对应DSA号", "DSA G端连接器位号", "G端连接器PIN"],  # 列结构
                 "key_column": "嵌入式对应通道",
             },
             "HVDPS": {
-                "columns": ["嵌入式对应通道", "数字板C端连接器", "HV分发板C端连接器(DSA侧)", "对应DSA号", "DSA G端连接器位号"],  # 列结构
+                "columns": ["嵌入式对应通道", "数字板C端连接器", "C端连接器PIN(HV侧)", "HV分发板C端连接器(DSA侧)", "C端连接器PIN(DSA侧)", "对应DSA号", "DSA G端连接器位号", "G端连接器PIN"],  # 列结构
                 "key_column": "嵌入式对应通道",
+            },
+            "主控板MRP": {
+                "columns": ["CBIT通道号", "主控板C端连接器", "C端连接器PIN(主控侧)", "主控分发板C端连接器(DSA侧)", "C端连接器PIN(DSA侧)", "对应DSA号", "DSA G端连接器位号", "G端连接器PIN"],  # 列结构
+                "key_column": "CBIT通道号",
             },
     },
     },
