@@ -2,30 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4bfae40f-9c13-4d50-85be-b48eab6a80ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/board_excel_map.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Remaping_V2.0.spec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Remaping_V2.0/Analysis-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Remaping_V2.0/EXE-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Remaping_V2.0/PKG-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Remaping_V2.0/PYZ-00.pyz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Remaping_V2.0/PYZ-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Remaping_V2.0/Remaping_V2.0.pkg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Remaping_V2.0/base_library.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Remaping_V2.0/warn-Remaping_V2.0.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Remaping_V2.0/xref-Remaping_V2.0.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/Remaping_V2.0.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Remaping_V1.0.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Remaping_V1.1.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Remaping_V1.3.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Remaping_V1.5.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Remaping_V1.6.spec" beforeDir="false" afterPath="$PROJECT_DIR$/Remaping_V1.6.spec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Remaping_V1.7.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Remaping_v1.4.spec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/board_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/board_list.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.6/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.6/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.6/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.6/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.6/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.6/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.6/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.6/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.6/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.6/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.6/Remaping_V1.6.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.6/Remaping_V1.6.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.6/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.6/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.6/warn-Remaping_V1.6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.6/warn-Remaping_V1.6.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Remaping_V1.6/xref-Remaping_V1.6.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/Remaping_V1.6/xref-Remaping_V1.6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/channel_map/YMTC软硬件通道映射.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/channel_map/YMTC软硬件通道映射.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/Remaping_V1.6.exe" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Remaping_V1.6.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flip_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/flip_list.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/machine_slot_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/machine_slot_map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board_list/射频板MIX.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/board_list/射频板MIX.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -239,31 +229,31 @@
     </state>
     <state x="1261" y="276" key="#xdebugger.evaluate/0.0.1870.948@0.0.1870.948" timestamp="1792576206428" />
     <state x="918" y="155" key="#xdebugger.evaluate/0.0.1880.944@0.0.1880.944" timestamp="1788851205693" />
-    <state width="1848" height="276" key="GridCell.Tab.0.bottom" timestamp="1793339326741">
+    <state width="1848" height="276" key="GridCell.Tab.0.bottom" timestamp="1793686381300">
       <screen x="0" y="0" width="1870" height="948" />
     </state>
-    <state width="1848" height="276" key="GridCell.Tab.0.bottom/0.0.1870.948@0.0.1870.948" timestamp="1793339326741" />
+    <state width="1848" height="276" key="GridCell.Tab.0.bottom/0.0.1870.948@0.0.1870.948" timestamp="1793686381300" />
     <state width="1858" height="323" key="GridCell.Tab.0.bottom/0.0.1880.944@0.0.1880.944" timestamp="1789536904931" />
     <state width="929" height="209" key="GridCell.Tab.0.bottom/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.0.bottom/0.0.1916.958@0.0.1916.958" timestamp="1790053712608" />
-    <state width="1848" height="276" key="GridCell.Tab.0.center" timestamp="1793339326741">
+    <state width="1848" height="276" key="GridCell.Tab.0.center" timestamp="1793686381300">
       <screen x="0" y="0" width="1870" height="948" />
     </state>
-    <state width="1848" height="276" key="GridCell.Tab.0.center/0.0.1870.948@0.0.1870.948" timestamp="1793339326741" />
+    <state width="1848" height="276" key="GridCell.Tab.0.center/0.0.1870.948@0.0.1870.948" timestamp="1793686381300" />
     <state width="1858" height="323" key="GridCell.Tab.0.center/0.0.1880.944@0.0.1880.944" timestamp="1789536904931" />
     <state width="929" height="209" key="GridCell.Tab.0.center/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.0.center/0.0.1916.958@0.0.1916.958" timestamp="1790053712608" />
-    <state width="1848" height="276" key="GridCell.Tab.0.left" timestamp="1793339326740">
+    <state width="1848" height="276" key="GridCell.Tab.0.left" timestamp="1793686381299">
       <screen x="0" y="0" width="1870" height="948" />
     </state>
-    <state width="1848" height="276" key="GridCell.Tab.0.left/0.0.1870.948@0.0.1870.948" timestamp="1793339326740" />
+    <state width="1848" height="276" key="GridCell.Tab.0.left/0.0.1870.948@0.0.1870.948" timestamp="1793686381299" />
     <state width="1858" height="323" key="GridCell.Tab.0.left/0.0.1880.944@0.0.1880.944" timestamp="1789536904931" />
     <state width="929" height="209" key="GridCell.Tab.0.left/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.0.left/0.0.1916.958@0.0.1916.958" timestamp="1790053712608" />
-    <state width="1848" height="276" key="GridCell.Tab.0.right" timestamp="1793339326741">
+    <state width="1848" height="276" key="GridCell.Tab.0.right" timestamp="1793686381300">
       <screen x="0" y="0" width="1870" height="948" />
     </state>
-    <state width="1848" height="276" key="GridCell.Tab.0.right/0.0.1870.948@0.0.1870.948" timestamp="1793339326741" />
+    <state width="1848" height="276" key="GridCell.Tab.0.right/0.0.1870.948@0.0.1870.948" timestamp="1793686381300" />
     <state width="1858" height="323" key="GridCell.Tab.0.right/0.0.1880.944@0.0.1880.944" timestamp="1789536904931" />
     <state width="929" height="209" key="GridCell.Tab.0.right/0.0.1880.950@0.0.1880.950" timestamp="1789693244820" />
     <state width="1894" height="208" key="GridCell.Tab.0.right/0.0.1916.958@0.0.1916.958" timestamp="1790053712608" />
@@ -304,10 +294,10 @@
     </state>
     <state width="697" height="454" key="XDebugger.FullValuePopup/0.0.1870.948@0.0.1870.948" timestamp="1792652248156" />
     <state width="700" height="452" key="XDebugger.FullValuePopup/0.0.1880.944@0.0.1880.944" timestamp="1788515252039" />
-    <state x="621" y="295" key="com.intellij.ide.util.TipDialog" timestamp="1793338069778">
+    <state x="621" y="295" key="com.intellij.ide.util.TipDialog" timestamp="1793928726942">
       <screen x="0" y="0" width="1870" height="948" />
     </state>
-    <state x="621" y="295" key="com.intellij.ide.util.TipDialog/0.0.1870.948@0.0.1870.948" timestamp="1793338069778" />
+    <state x="621" y="295" key="com.intellij.ide.util.TipDialog/0.0.1870.948@0.0.1870.948" timestamp="1793928726942" />
     <state x="625" y="294" key="com.intellij.ide.util.TipDialog/0.0.1880.944@0.0.1880.944" timestamp="1789536140162" />
     <state x="637" y="298" key="com.intellij.ide.util.TipDialog/0.0.1916.958@0.0.1916.958" timestamp="1790127374488" />
     <state x="638" y="324" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1790130028724" />

@@ -31,7 +31,7 @@ from board_excel_map import BOARD_EXCEL_PATH_MAP
 class PinConvertApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("线缆引脚定义生成工具v1.9")
+        self.root.title("线缆引脚定义生成工具v2.0")
         self.root.geometry("1080x520")
 
         # ========== 新增：顶部标签页容器 ==========
@@ -166,7 +166,7 @@ class PinConvertApp:
         tk.Label(status_bar, text="作者：冯志鹏", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="left", padx=10)
         self.scroll_label = tk.Label(status_bar, text="", bg="#f0f0f0", font=("微软雅黑", 9), fg="#333333")
         self.scroll_label.pack(side="left", fill="x", expand=True)
-        tk.Label(status_bar, text="版本：v1.9", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
+        tk.Label(status_bar, text="版本：v2.0", bg="#f0f0f0", font=("微软雅黑", 9)).pack(side="right", padx=10)
 
         self.update_scroll()
         self.on_cable_changed()
